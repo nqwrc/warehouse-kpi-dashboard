@@ -1,0 +1,27 @@
+sku,product_name,category,storage_zone
+SKU1000,Peas 450g,Vegetables,-18C
+SKU1001,Spinach cubes 600g,Vegetables,-18C
+SKU1002,Minestrone mix 1kg,Vegetables,-18C
+SKU1003,Green beans 450g,Vegetables,-18C
+SKU1004,Grilled peppers 400g,Vegetables,-18C
+SKU1005,Cod fillets 400g,Fish,-25C
+SKU1006,Breaded shrimp 300g,Fish,-25C
+SKU1007,Salmon portions 500g,Fish,-25C
+SKU1008,Seafood mix 400g,Fish,-25C
+SKU1009,Sole fillets 350g,Fish,-25C
+SKU1010,Vanilla tub 1L,Ice cream,-25C
+SKU1011,Chocolate sticks x6,Ice cream,-25C
+SKU1012,Lemon sorbet 750ml,Ice cream,-25C
+SKU1013,Hazelnut cones x4,Ice cream,-25C
+SKU1014,Stracciatella tub 1L,Ice cream,-25C
+SKU1015,Lasagne 600g,Ready meals,-18C
+SKU1016,Pizza margherita x2,Ready meals,-18C
+SKU1017,Risotto mushrooms 350g,Ready meals,-18C
+SKU1018,Cannelloni 500g,Ready meals,-18C
+SKU1019,Veg burger x4,Ready meals,-18C
+SKU1020,Chicken cutlets 500g,Meat,-18C
+SKU1021,Meatballs 400g,Meat,-18C
+SKU1022,Turkey slices 300g,Meat,-18C
+SKU1023,Croissants x6,Bakery,-18C
+SKU1024,Baguette x2,Bakery,-18C
+SKU1025,Strudel 400g,Bakery,-18C
