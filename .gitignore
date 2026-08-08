@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+warehouse.db
+.ipynb_checkpoints/
+.venv/
+.claude/
