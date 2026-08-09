@@ -1,74 +1,90 @@
 # Warehouse KPI Dashboard 🧊
 
-KPI monitoring for a **refrigerated food warehouse**: picking accuracy, error
-analysis by operator, volume by category and lot **expiry-risk** tracking.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.50+-FF4B4B.svg?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![SQLite](https://img.shields.io/badge/SQLite-3-003B57.svg?style=flat&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-I spent a season picking orders in a refrigerated warehouse with strict
-batch/expiry controls and a hard target — keep the picking error rate **below
-1%**. This project rebuilds that monitoring as a proper data product: the
-dataset is **synthetic but modeled on the real operation** (temperature zones,
-lot codes, error taxonomy, weekday volume patterns).
+Interactive KPI monitoring and data engineering pipeline for **refrigerated food warehouse operations**: picking accuracy tracking against a **1% error rate SLA**, operator Pareto error analysis, volume by temperature zone, and 30-day **lot expiry risk alerting**.
 
-<!-- TODO: add a dashboard screenshot here
-![Dashboard](docs/screenshot.png) -->
+Modelled on real-world cold-storage logistics operations (temperature zones `-18°C` / `-25°C`, lot expiry control, FIFO prioritization, weekday peak patterns).
 
-## What it answers
+---
 
-- Are we below the 1% error-rate target — overall, weekly, per picker?
-- Which error types dominate (wrong quantity, wrong item, damaged, expired lot)?
-- Where does picking volume actually go, by category and temperature zone?
-- Which lots expire within 30 days and need FIFO priority?
+## 📈 Pipeline Architecture
 
-## Stack
-
-| Layer | Tool |
-|-------|------|
-| Data generation | Python (seeded, reproducible) |
-| Storage & queries | SQLite — schema + 6 commented KPI queries in [`sql/`](sql/) |
-| Analysis | pandas + matplotlib notebook in [`notebooks/`](notebooks/) |
-| Dashboard | Streamlit |
-
-## Run it
-
-```bash
-pip install -r requirements.txt
-
-python data/generate_data.py      # 1. generate the synthetic CSVs
-python build_db.py                # 2. load them into SQLite (warehouse.db)
-streamlit run app/streamlit_app.py  # 3. open the dashboard
+```mermaid
+flowchart LR
+    A[Synthetic Generator\ndata/generate_data.py] -->|CSV Datasets| B[SQLite Ingestion\nbuild_db.py]
+    B -->|warehouse.db| C[SQL Analytical Engine\nsql/queries.sql]
+    C -->|6 KPI Queries| D[Streamlit Dashboard\napp/streamlit_app.py]
+    C -->|Pandas DataFrames| E[Jupyter Notebook\nnotebooks/01_kpi_analysis.ipynb]
 ```
 
-Explore the SQL directly:
+---
 
+## 🎯 Key Operational Questions Answered
+
+- **Error SLA Compliance**: Are picking errors maintained below the strict `< 1.0%` threshold across overall operations, weekly trends, and individual pickers?
+- **Error Taxonomy Pareto**: Which root causes drive failures (wrong quantity, wrong SKU, damaged packaging, expired lot)?
+- **Volume Distribution**: Volume breakdown by category, picker throughput, and temperature zone (`-18°C` frozen vs `-25°C` deep freeze).
+- **Expiry Risk & FIFO Alerting**: Which lots expire within 30 days and require immediate stock rotation / clearance?
+
+---
+
+## 🛠️ Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Data Engine** | Python 3.10+ (seeded, 100% reproducible) |
+| **Database** | SQLite3 schema + 6 commented analytical queries in [`sql/`](sql/) |
+| **Analysis** | pandas + matplotlib narrative notebook in [`notebooks/`](notebooks/) |
+| **Dashboard** | Streamlit interactive web application |
+
+---
+
+## 🚀 Quickstart
+
+```bash
+# 1. Clone & install dependencies
+git clone https://github.com/nqwrc/warehouse-kpi-dashboard.git
+cd warehouse-kpi-dashboard
+pip install -r requirements.txt
+
+# 2. Generate synthetic data & build SQLite database
+python data/generate_data.py
+python build_db.py
+
+# 3. Launch Streamlit Dashboard
+streamlit run app/streamlit_app.py
+```
+
+Direct SQL CLI Exploration:
 ```bash
 sqlite3 warehouse.db < sql/queries.sql
 ```
 
-## Project structure
+---
+
+## 📁 Repository Structure
 
 ```
-├── data/
-│   ├── generate_data.py   # synthetic data generator (seeded)
-│   └── *.csv              # products, lots, order_lines
-├── sql/
-│   ├── schema.sql         # tables + indexes
-│   └── queries.sql        # 6 KPI queries, one operational question each
-├── notebooks/
-│   └── 01_kpi_analysis.ipynb  # narrative analysis with charts
 ├── app/
-│   └── streamlit_app.py   # interactive dashboard
-└── build_db.py            # CSV → SQLite loader
+│   └── streamlit_app.py         # Streamlit interactive dashboard
+├── data/
+│   ├── generate_data.py         # Synthetic dataset generator (seeded)
+│   └── *.csv                    # Products, lots, picking order lines
+├── sql/
+│   ├── schema.sql               # SQLite schema & performance indexes
+│   └── queries.sql              # 6 analytical KPI queries with rationale
+├── notebooks/
+│   └── 01_kpi_analysis.ipynb    # Exploratory data analysis & visualizations
+├── build_db.py                  # CSV ingestion into warehouse.db
+└── requirements.txt             # Python dependencies
 ```
 
-## KPI definitions
+---
 
-- **Error rate** = lines with an error / total picked lines (target < 1%)
-- **Expiry risk** = lots with 0–30 days to expiry as of the last activity date
-- **Volume** = units picked, grouped by category / week / picker
+## 📝 License
 
-## Notes
-
-- Data is 100% synthetic — no employer data was used. Patterns (error
-  taxonomy, -18°C/-25°C zones, Mon–Tue volume peaks, one struggling new hire)
-  reflect first-hand operational experience.
-- License: MIT
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
