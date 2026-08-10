@@ -64,6 +64,12 @@ Direct SQL CLI Exploration:
 sqlite3 warehouse.db < sql/queries.sql
 ```
 
+> **On the foreign keys.** SQLite parses `REFERENCES` but does not enforce it unless
+> `PRAGMA foreign_keys = ON` is set, and that setting lives on the connection, not in the
+> file — it defaults to OFF for every new one. `build_db.py` switches it on, so the load
+> is checked; if you want the same guarantee while exploring, run `PRAGMA foreign_keys = ON;`
+> first in the CLI too.
+
 ---
 
 ## 📁 Repository Structure
