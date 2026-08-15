@@ -4,3 +4,6 @@ warehouse.db
 .ipynb_checkpoints/
 .venv/
 .claude/
+
+# Local AI-agent context, not meant for a public repo
+CLAUDE.md
