@@ -113,7 +113,11 @@ for week in range(WEEKS):
 # ------------------------------------------------------------------- write --
 def write_csv(filename, rows):
     with open(f"{OUT_DIR}/{filename}", "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=rows[0].keys())
+        # csv defaults to \r\n on every platform, so without lineterminator the
+        # generator rewrites the committed files with different line endings and
+        # git reports a diff nobody made. The seed makes the data reproducible;
+        # this makes the bytes reproducible too.
+        writer = csv.DictWriter(f, fieldnames=rows[0].keys(), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     print(f"{filename}: {len(rows)} rows")

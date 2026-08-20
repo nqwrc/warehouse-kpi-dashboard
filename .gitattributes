@@ -1,0 +1,5 @@
+# The generator writes LF (see data/generate_data.py). Pinning the working copy
+# to LF as well means regenerating the dataset never produces a phantom diff,
+# whatever core.autocrlf the person who cloned happens to have.
+* text=auto
+*.csv text eol=lf
