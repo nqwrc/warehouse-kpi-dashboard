@@ -11,12 +11,12 @@ well; neither is a number, and inventing one would only decorate this file. Decl
 deviation from the 1-3 KPI rule.
 
 ## now
-Pipeline, notebook and dashboard complete; a 19-test pytest suite, a CI workflow and the
-README corrections sit on local `main`, seven commits past `origin/main` (675a5ae).
-Deploy-readiness is confirmed: the dashboard reads the committed CSVs, no build step.
+Pipeline, notebook and dashboard complete; the 19-test pytest suite and CI workflow are
+pushed, and the first Actions run (7cf15e7) is green. Deploy-readiness is confirmed:
+the dashboard reads the committed CSVs, no build step - the Streamlit deploy is one
+owner action away.
 
 ## backlog
-- push the local commits (675a5ae..HEAD) to the public remote — owner action
 - deploy the dashboard on Streamlit Community Cloud, then set the repository homepage
 - add a dashboard screenshot to the README
 
