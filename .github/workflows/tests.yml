@@ -1,0 +1,33 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # The oldest version the code targets and the newest one it runs on.
+        python-version: ["3.10", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - run: pip install -r requirements-dev.txt
+
+      - name: Pipeline end to end
+        # The two commands from the README quickstart have to keep working,
+        # not just the functions the unit tests call directly.
+        run: |
+          python data/generate_data.py
+          python build_db.py
+
+      - name: Tests
+        run: pytest -q
