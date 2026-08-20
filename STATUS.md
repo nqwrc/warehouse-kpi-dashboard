@@ -2,7 +2,7 @@
 
 state: active
 remote: github-public
-updated: 2026-08-10
+updated: 2026-08-20
 stale-after-days: 30
 
 ## kpi
@@ -11,15 +11,22 @@ well; neither is a number, and inventing one would only decorate this file. Decl
 deviation from the 1-3 KPI rule.
 
 ## now
-Complete and public: synthetic data generator, dataset, SQLite schema and loader, six KPI
-queries, the analysis notebook and the Streamlit dashboard, all on `main` and in sync with
-the remote. The dashboard is not deployed anywhere yet, so the repository has no homepage.
+Pipeline, notebook and dashboard complete; a 19-test pytest suite, a CI workflow and the
+README corrections sit on local `main`, seven commits past `origin/main` (675a5ae).
+Deploy-readiness is confirmed: the dashboard reads the committed CSVs, no build step.
 
 ## backlog
+- push the local commits (675a5ae..HEAD) to the public remote — owner action
 - deploy the dashboard on Streamlit Community Cloud, then set the repository homepage
 - add a dashboard screenshot to the README
 
 ## log
+- 2026-08-20 — test suite and CI reviewed and repaired: the generator now writes LF, so
+  the byte-equality test passes on a clean clone; CI runs pytest before the pipeline;
+  build_db.py's FK pragma is covered through the loader itself; the README diagram now
+  matches the code (dashboard and notebook read the CSVs) — evidence: commits c8ad338 to
+  8de8dba, and `pytest -q` = 19 passed in two fresh clones (core.autocrlf input and true)
+  with a fresh venv, before and after running the pipeline
 - 2026-08-10 — the four commits built on 2026-08-09 pushed, and `app/` and `notebooks/`
   put under git: for two days the public repository held only the generator and the
   licence — evidence: `git ls-remote origin HEAD` was 76c329b, commit 2 of 6
