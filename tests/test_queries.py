@@ -13,7 +13,12 @@ from tests.conftest import REPO_ROOT
 
 
 def load_queries() -> list[str]:
-    """Pull the 6 standalone SELECT statements out of sql/queries.sql."""
+    """Pull the 6 standalone SELECT statements out of sql/queries.sql.
+
+    The count is checked here and nowhere else: a query added, removed or
+    broken shifts every QUERIES[i] below, so the whole module has to stop
+    at collection time rather than report six confusing failures.
+    """
     text = (REPO_ROOT / "sql" / "queries.sql").read_text()
     statements = re.findall(r"SELECT.*?;", text, re.S)
     assert len(statements) == 6, f"expected 6 queries in sql/queries.sql, found {len(statements)}"
@@ -21,10 +26,6 @@ def load_queries() -> list[str]:
 
 
 QUERIES = load_queries()
-
-
-def test_sql_queries_file_has_six_queries():
-    assert len(QUERIES) == 6
 
 
 # -------------------------------------------- Q1: overall error rate vs SLA

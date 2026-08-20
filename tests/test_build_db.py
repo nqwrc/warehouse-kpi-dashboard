@@ -8,7 +8,7 @@ Run:  pytest
 
 import sqlite3
 
-from tests.conftest import REPO_ROOT
+from tests.conftest import REPO_ROOT, run_python, stage_pipeline
 
 BAD_ORDER_LINE = (
     "INSERT INTO order_lines "
@@ -120,3 +120,27 @@ def test_build_db_rejects_a_bad_foreign_key_after_loading(db_connection):
         pass
     else:
         raise AssertionError("expected sqlite3.IntegrityError, insert succeeded")
+
+
+def test_build_db_fails_on_a_csv_with_a_dangling_foreign_key(tmp_path):
+    """The PRAGMA in build_db.py, covered where it actually lives.
+
+    The tests above set the pragma themselves, so they would still pass if
+    build_db.py stopped setting it. This one feeds the real loader a CSV set
+    whose last order line points at a sku and a lot that do not exist: the
+    load must fail, not quietly write a database with a broken reference.
+    """
+    stage_pipeline(tmp_path)
+
+    order_lines = tmp_path / "data" / "order_lines.csv"
+    kept = order_lines.read_text().splitlines()[:11]  # header + 10 valid rows
+    kept.append("999999,1,2026-01-01,PX,NO-SUCH-SKU,NO-SUCH-LOT,1,")
+    order_lines.write_text("\n".join(kept) + "\n")
+
+    result = run_python("build_db.py", cwd=tmp_path, check=False)
+
+    assert result.returncode != 0, (
+        "build_db.py loaded a dangling foreign key without failing\n"
+        f"stdout:\n{result.stdout}"
+    )
+    assert "FOREIGN KEY constraint failed" in result.stderr
