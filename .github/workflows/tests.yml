@@ -22,12 +22,18 @@ jobs:
 
       - run: pip install -r requirements-dev.txt
 
-      - name: Pipeline end to end
-        # The two commands from the README quickstart have to keep working,
-        # not just the functions the unit tests call directly.
-        run: |
-          python data/generate_data.py
-          python build_db.py
-
+      # Tests run first, against the pristine checkout: one of them asserts the
+      # committed data/*.csv is byte-identical to what the generator produces
+      # today, and regenerating before pytest would compare a file with itself.
       - name: Tests
         run: pytest -q
+
+      - name: Pipeline end to end
+        # The two commands from the README quickstart have to keep working, not
+        # just the functions the unit tests call directly. The diff check is the
+        # Linux-side proof of what the byte-equality test asserts on the runner
+        # that actually regenerates: a full run leaves the dataset untouched.
+        run: |
+          python data/generate_data.py
+          git diff --exit-code data/
+          python build_db.py
