@@ -1,0 +1,5 @@
+# Development/test-only dependencies. Not needed to run the app or the
+# pipeline -- see requirements.txt for that. Kept separate so CI can install
+# it without editing the production requirements file.
+-r requirements.txt
+pytest>=8.0
