@@ -18,9 +18,12 @@ owner action away.
 
 ## backlog
 - deploy the dashboard on Streamlit Community Cloud, then set the repository homepage
-- add a dashboard screenshot to the README
 
 ## log
+- 2026-08-20 (later) — dashboard screenshot added to the README (docs/dashboard.png):
+  captured from the running app (headless Chrome via Selenium, Streamlit toolbar set
+  to minimal, cropped to 1424x1120), shows the KPI tiles and all four charts rendered
+  from the committed dataset
 - 2026-08-20 — test suite and CI reviewed and repaired: the generator now writes LF, so
   the byte-equality test passes on a clean clone; CI runs pytest before the pipeline;
   build_db.py's FK pragma is covered through the loader itself; the README diagram now

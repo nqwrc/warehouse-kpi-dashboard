@@ -9,6 +9,8 @@ Interactive KPI monitoring and data engineering pipeline for **refrigerated food
 
 Modelled on real-world cold-storage logistics operations (temperature zones `-18°C` / `-25°C`, lot expiry control, FIFO prioritization, weekday peak patterns).
 
+![Streamlit dashboard: KPI tiles, weekly error rate vs target, error rate by picker, error-type Pareto, volume by category](docs/dashboard.png)
+
 ---
 
 ## 📈 Pipeline Architecture
@@ -91,6 +93,8 @@ sqlite3 warehouse.db < sql/queries.sql
 │   └── queries.sql              # 6 analytical KPI queries with rationale
 ├── notebooks/
 │   └── 01_kpi_analysis.ipynb    # Exploratory data analysis & visualizations
+├── docs/
+│   └── dashboard.png            # Dashboard screenshot embedded in this README
 ├── tests/                       # pytest suite, pinned to the seeded dataset
 ├── build_db.py                  # CSV ingestion into warehouse.db
 ├── requirements.txt             # Runtime dependencies (dashboard + pipeline)
