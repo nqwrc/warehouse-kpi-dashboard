@@ -1,3 +1,2 @@
 pandas>=2.0
-matplotlib>=3.7
 streamlit>=1.50   # 1.36 added st.bar_chart(horizontal=...), 1.50 added sort=
