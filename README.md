@@ -9,6 +9,8 @@ Interactive KPI monitoring and data engineering pipeline for **refrigerated food
 
 Modelled on real-world cold-storage logistics operations (temperature zones `-18°C` / `-25°C`, lot expiry control, FIFO prioritization, weekday peak patterns).
 
+**[Open the live dashboard ↗](https://warehouse-kpi-dashboard-6ujlbodc9l7cyxbetmzmcw.streamlit.app/)** — deployed on Streamlit Community Cloud, no sign-in required.
+
 ![Streamlit dashboard: KPI tiles, weekly error rate vs target, error rate by picker, error-type Pareto, volume by category](docs/dashboard.png)
 
 ---

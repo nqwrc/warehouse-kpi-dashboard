@@ -20,13 +20,25 @@ tests/test_dashboard.py pins all of that through Streamlit's AppTest harness, wh
 also fixes the working directory to the repo root, the same contract Streamlit
 Community Cloud runs the main file under. Deploy inputs: repo nqwrc/warehouse-kpi-
 dashboard, branch main, main file app/streamlit_app.py, requirements.txt at the root,
-no secrets, Python 3.13 (the only version it has been run on). The deploy itself needs
-a GitHub authorization on share.streamlit.io and stays an owner action.
+no secrets, Python 3.13 (the only version it has been run on).
+
+Deployed and publicly reachable: https://warehouse-kpi-dashboard-6ujlbodc9l7cyxbetmzmcw.streamlit.app/
+Checked from a throwaway headless-Chrome profile with no Streamlit login, which renders
+the whole page - four KPI tiles, four charts, the expiry table - so an anonymous visitor
+gets the dashboard and not a sign-in screen. The README links it and the repository
+homepage points at it.
 
 ## backlog
-- deploy the dashboard on Streamlit Community Cloud, then set the repository homepage
+- empty
 
 ## log
+- 2026-09-08 - deployed on Streamlit Community Cloud and verified anonymously: headless
+  Chrome over CDP with a fresh user-data-dir and no login renders the four KPI tiles
+  (46,247 / 300,739 / 0.87% / 8), the four charts and the expiry table, and
+  `GET /~/+/_stcore/health` returns `ok` 200 cookieless. A bare cookieless `GET /`
+  returns 303 to the auth handshake for every visitor, private or not, so it measures
+  nothing about access - that was the wrong check. README link and repository homepage
+  set to the app URL
 - 2026-08-20 (later) — dashboard screenshot added to the README (docs/dashboard.png):
   captured from the running app (headless Chrome via Selenium, Streamlit toolbar set
   to minimal, cropped to 1424x1120), shows the KPI tiles and all four charts rendered
