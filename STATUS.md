@@ -29,7 +29,12 @@ gets the dashboard and not a sign-in screen. The README links it and the reposit
 homepage points at it.
 
 ## backlog
-- empty
+- commit 8ec9357 "Added Dev Container Folder" landed on public main during the deploy
+  flow: the stock Codespaces template, pinning Python 3.11 where the project is verified
+  on 3.13, and running the app with `--server.enableCORS false
+  --server.enableXsrfProtection false`. Dev-only, but published, and rule 1 of the
+  public-repo standard is that every line holds up when asked about. Keep it aligned or
+  drop it: owner's call, not taken here
 
 ## log
 - 2026-09-08 - deployed on Streamlit Community Cloud and verified anonymously: headless
