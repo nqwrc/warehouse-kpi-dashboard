@@ -2,7 +2,7 @@
 
 state: active
 remote: github-public
-updated: 2026-08-20
+updated: 2026-09-08
 stale-after-days: 30
 
 ## kpi
@@ -11,10 +11,17 @@ well; neither is a number, and inventing one would only decorate this file. Decl
 deviation from the 1-3 KPI rule.
 
 ## now
-Pipeline, notebook and dashboard complete; the 19-test pytest suite and CI workflow are
-pushed, and the first Actions run (7cf15e7) is green. Deploy-readiness is confirmed:
-the dashboard reads the committed CSVs, no build step - the Streamlit deploy is one
-owner action away.
+Pipeline, notebook and dashboard complete; the pytest suite is 22 tests and the CI
+workflow is pushed. Deploy-readiness is no longer only asserted: the app was run
+headless from the repo root and renders clean - no exception, four KPI tiles (46,247
+picked lines, 300,739 units, 0.87% error rate, 8 pickers), four charts, the expiry
+table - and narrowing the category filter reruns and drops picked lines to 5,477.
+tests/test_dashboard.py pins all of that through Streamlit's AppTest harness, which
+also fixes the working directory to the repo root, the same contract Streamlit
+Community Cloud runs the main file under. Deploy inputs: repo nqwrc/warehouse-kpi-
+dashboard, branch main, main file app/streamlit_app.py, requirements.txt at the root,
+no secrets, Python 3.13 (the only version it has been run on). The deploy itself needs
+a GitHub authorization on share.streamlit.io and stays an owner action.
 
 ## backlog
 - deploy the dashboard on Streamlit Community Cloud, then set the repository homepage
